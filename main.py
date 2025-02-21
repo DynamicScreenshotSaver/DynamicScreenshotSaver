@@ -1,10 +1,12 @@
 import os
-from datetime import datetime
 import mss
 import mss.tools
 import keyboard
 import tkinter as tk
+import win32gui
+
 from tkinter import ttk
+from datetime import datetime
 
 # Base directory where your folders are located
 BASE_DIR = r"E:\FIB\CID"
@@ -102,6 +104,11 @@ class ScreenshotTool:
             
             # Force the menu to be topmost
             self.root.attributes('-topmost', True)
+            
+            # Set menu window position and make it topmost
+            hwnd = win32gui.GetForegroundWindow()
+            win32gui.SetWindowPos(hwnd, -1, x, y, 0, 0, 0x0001 | 0x0002 | 0x0040)
+            
             self.menu.post(x, y)  # Using post instead of tk_popup for better reliability
             
         finally:
